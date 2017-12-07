@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Menu {
     Map<String, Employee> listOfEmployee;
+    final static int MAX_CAPACITY = StartApplication.MAX_CAPACITY;
 
     public Menu(Map<String, Employee> listOfEmployee) {
         this.listOfEmployee = listOfEmployee;
-
     }
 
     public static void showMenu() {
@@ -36,7 +36,6 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj nazwisko: ");
         name = scanner.nextLine();
-
         return name;
     }
 
@@ -61,15 +60,26 @@ public class Menu {
                 break;
 
             case 4:
-                System.out.println("Przyjmij Urzdnika: ");
-                name = getName();
+                if (listOfEmployee.size() < MAX_CAPACITY) {
+                    System.out.println("Przyjmij Urzdnika: ");
+                    name = getName();
 
-                listOfEmployee.put(name, getNewClerkData(name));
+                    listOfEmployee.put(name, getNewClerkData(name));
+                } else {
+
+                    System.out.println("Osiągnięto maxymalną liczbą pracowników. ");
+                }
                 break;
             case 5:
-                System.out.println("Przyjmij Robotnika: ");
-                name = getName();
-                listOfEmployee.put(name, getNewWorkerData(name));
+                if (listOfEmployee.size() < MAX_CAPACITY) {
+
+                    System.out.println("Przyjmij Robotnika: ");
+                    name = getName();
+                    listOfEmployee.put(name, getNewWorkerData(name));
+                } else {
+
+                    System.out.println("Osiągnięto maxymalną liczbą pracowników. ");
+                }
                 break;
             case 6:
                 name = getName();
@@ -80,7 +90,7 @@ public class Menu {
                 int workerCount = 0, clerkCount = 0;
                 System.out.println("Jest zatrudnionych: ");
                 for (String nameOfEmployee : listOfEmployee.keySet()) {
-                    if (listOfEmployee.get(nameOfEmployee).getEmployeeJobTitle().equals(Worker.WORKER_TITLE)) {
+                    if (listOfEmployee.get(nameOfEmployee).getEmployeeJobTitle().equals(Worker.workerTitle)) {
                         workerCount++;
                     } else if (listOfEmployee.get(nameOfEmployee).getEmployeeJobTitle().equals(Clerk.CLERK_JOB_TITLE)) {
                         clerkCount++;
@@ -88,14 +98,11 @@ public class Menu {
                 }
                 System.out.println("Robotnikw: " + workerCount);
                 System.out.println("Urzednikow: " + clerkCount);
-
                 break;
-
-
             case 8:
                 int workersSalary = 0, clerksSalary = 0;
                 for (String nameOfEmployee : listOfEmployee.keySet()) {
-                    if (listOfEmployee.get(nameOfEmployee).getEmployeeJobTitle().equals(Worker.WORKER_TITLE)) {
+                    if (listOfEmployee.get(nameOfEmployee).getEmployeeJobTitle().equals(Worker.workerTitle)) {
                         workersSalary += listOfEmployee.get(nameOfEmployee).getSalaryOfEmployee();
                     } else if (listOfEmployee.get(nameOfEmployee).getEmployeeJobTitle().equals(Clerk.CLERK_JOB_TITLE)) {
                         clerksSalary += listOfEmployee.get(nameOfEmployee).getSalaryOfEmployee();
@@ -105,26 +112,22 @@ public class Menu {
                 System.out.println("Urzednikow: " + clerksSalary);
                 System.out.println("Robotnikow: " + workersSalary);
                 break;
-
             case 9:
                 System.out.println("Wydruk pac wszystkich pracownikow: ");
                 for (String nameOfEmployee : listOfEmployee.keySet()) {
                     System.out.println(listOfEmployee.get(nameOfEmployee).toString());
                 }
-
                 break;
-
-
+            default :
+                System.out.println("Podaj poprawną wartość.");
+                break;
         }
-
-
-        return 0;
-
+        return -1;
     }
 
     private Worker getNewWorkerData(String name) {
         double rate;
-        Integer timeInt = null;
+        Integer timeInt;
         Scanner scanner = new Scanner(System.in);
         Time time = null;
         System.out.println("Jaka jest stawka godzinowa robotnika:");
@@ -159,9 +162,7 @@ public class Menu {
         System.out.println("Jaki jest bonus urzednika:");
         Scanner scanner = new Scanner(System.in);
         bonus = scanner.nextDouble();
-
         Clerk clerk = new Clerk(name, bonus);
-
         return clerk;
     }
 }

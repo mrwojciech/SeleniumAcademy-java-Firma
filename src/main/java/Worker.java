@@ -1,18 +1,13 @@
 public class Worker extends Employee {
 
-
-    public static String WORKER_TITLE = "Robotnik";
+    public static String workerTitle = "Robotnik";
     private double hourRate = 1.5;
-//    Time time;
-    private double BONUS_RATE = 1.5;
-    private String robotnik;
-
+    private double bonusRate = 1.5;
 
     public Worker(String name, Time time, double hourRate) {
         super(name, time);
         this.hourRate = hourRate;
     }
-
 
     public double getHourRate() {
         return hourRate;
@@ -24,7 +19,7 @@ public class Worker extends Employee {
 
     public double getSalaryOfEmployee() {
         double salary = 0;
-        switch (super.getTime()) {
+        switch (getTime()) {
             case HALF:
                 salary = Time.HALF.counter * hourRate;
                 break;
@@ -33,7 +28,7 @@ public class Worker extends Employee {
                 break;
             case OVER:
                 salary = ((Time.FULL.counter * hourRate) +
-                        (Time.OVER.counter - Time.FULL.counter) * hourRate * BONUS_RATE);
+                        (Time.OVER.counter - Time.FULL.counter) * hourRate * bonusRate);
                 break;
 
         }
@@ -42,11 +37,11 @@ public class Worker extends Employee {
 
     @Override
     public String getEmployeeJobTitle() {
-        return WORKER_TITLE;
+        return workerTitle;
     }
 
     @Override
     public String toString() {
-        return "Nazwisko: " + super.getName()+ " Wypata: " + this.getSalaryOfEmployee();
+        return "Nazwisko: " + getName() + " Wypata: " + getSalaryOfEmployee();
     }
 }

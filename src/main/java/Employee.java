@@ -1,15 +1,11 @@
 public abstract class Employee {
 
-
     private Time time;
     String name;
 
     public Time getTime() {
         return time;
     }
-
-    //  double salary;
-
 
     public String getName() {
         return name;
@@ -26,7 +22,6 @@ public abstract class Employee {
 
     public abstract double getSalaryOfEmployee();
 
-
     public abstract String getEmployeeJobTitle();
 
     @Override
@@ -35,7 +30,6 @@ public abstract class Employee {
         if (o == null || getClass() != o.getClass()) return false;
 
         Employee employee = (Employee) o;
-
         return name.equals(employee.name);
     }
 

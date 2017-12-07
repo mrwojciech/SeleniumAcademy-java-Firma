@@ -1,8 +1,9 @@
-public enum Time { HALF (20), FULL (40), OVER(50);
+public enum Time {
+    HALF(20), FULL(40), OVER(50);
 
-double counter;
+    double counter;
 
-private    Time(double time) {
+    Time(double time) {
         this.counter = time;
     }
 
